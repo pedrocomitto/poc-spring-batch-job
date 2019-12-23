@@ -1,15 +1,13 @@
 package com.pedrocomitto.poc.job;
 
-import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@EnableBatchProcessing
 @SpringBootApplication
-public class SpringBatchJobApplication {
+public class Application {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SpringBatchJobApplication.class, args);
+		SpringApplication.run(Application.class, args);
 	}
 
 }

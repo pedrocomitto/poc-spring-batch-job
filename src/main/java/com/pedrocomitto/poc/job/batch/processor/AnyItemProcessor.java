@@ -1,6 +1,6 @@
 package com.pedrocomitto.poc.job.batch.processor;
 
-import com.pedrocomitto.poc.job.AnyItemService;
+import com.pedrocomitto.poc.job.service.AnyItemService;
 import com.pedrocomitto.poc.job.domain.entity.AnyItemEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.configuration.annotation.StepScope;

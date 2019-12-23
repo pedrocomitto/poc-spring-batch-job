@@ -1,4 +1,4 @@
-package com.pedrocomitto.poc.job;
+package com.pedrocomitto.poc.job.service;
 
 import com.pedrocomitto.poc.job.domain.entity.AnyItemEntity;
 import com.pedrocomitto.poc.job.repository.AnyItemRepository;

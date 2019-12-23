@@ -1,4 +1,4 @@
-package com.pedrocomitto.poc.job.batch.processor;
+package com.pedrocomitto.poc.job.batch.writer;
 
 import com.pedrocomitto.poc.job.domain.entity.AnyItemEntity;
 import com.pedrocomitto.poc.job.repository.AnyItemRepository;

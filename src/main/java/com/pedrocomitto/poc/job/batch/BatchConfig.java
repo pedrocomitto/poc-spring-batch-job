@@ -1,5 +1,6 @@
-package com.pedrocomitto.poc.job.batch.processor;
+package com.pedrocomitto.poc.job.batch;
 
+import com.pedrocomitto.poc.job.batch.processor.AnyItemProcessor;
 import com.pedrocomitto.poc.job.domain.entity.AnyItemEntity;
 import com.pedrocomitto.poc.job.repository.AnyItemRepository;
 import org.springframework.batch.core.Job;
