@@ -1,6 +1,5 @@
 package com.pedrocomitto.poc.job.batch.processor;
 
-import com.pedrocomitto.poc.job.AnyItemService;
 import com.pedrocomitto.poc.job.domain.entity.AnyItemEntity;
 import com.pedrocomitto.poc.job.repository.AnyItemRepository;
 import org.springframework.batch.core.Job;
@@ -9,12 +8,14 @@ import org.springframework.batch.core.configuration.annotation.EnableBatchProces
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
+import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.data.RepositoryItemWriter;
 import org.springframework.batch.item.data.builder.RepositoryItemWriterBuilder;
 import org.springframework.batch.item.file.FlatFileItemReader;
 import org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper;
 import org.springframework.batch.item.file.mapping.DefaultLineMapper;
 import org.springframework.batch.item.file.transform.DelimitedLineTokenizer;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
@@ -29,18 +30,13 @@ public class BatchConfig {
 
     private final StepBuilderFactory stepBuilderFactory;
 
-    private final AnyItemService anyItemService;
-
     public BatchConfig(AnyItemRepository anyItemRepository,
                        JobBuilderFactory jobBuilderFactory,
-                       StepBuilderFactory stepBuilderFactory,
-                       AnyItemService anyItemService) {
+                       StepBuilderFactory stepBuilderFactory) {
         this.anyItemRepository = anyItemRepository;
         this.jobBuilderFactory = jobBuilderFactory;
         this.stepBuilderFactory = stepBuilderFactory;
-        this.anyItemService = anyItemService;
     }
-
 
     @Bean
     public FlatFileItemReader<AnyItemEntity> reader() {
@@ -51,7 +47,7 @@ public class BatchConfig {
         reader.setLineMapper(new DefaultLineMapper<AnyItemEntity>() {
             {
                 setLineTokenizer(new DelimitedLineTokenizer() {
-                    { setNames(new String[]{"info1", "info2"}); }
+                    { setNames("info1", "info2"); }
                 });
                 setFieldSetMapper(new BeanWrapperFieldSetMapper<AnyItemEntity>() {
                     { setTargetType(AnyItemEntity.class); }
@@ -63,32 +59,47 @@ public class BatchConfig {
     }
 
     @Bean
-    public AnyItemProcessor processor() {
-        return new AnyItemProcessor(anyItemService);
-    }
-
-    @Bean
-    public RepositoryItemWriter writer() {
+    public RepositoryItemWriter<AnyItemEntity> writer() {
         return new RepositoryItemWriterBuilder<AnyItemEntity>()
                 .repository(anyItemRepository)
                 .methodName("save").build();
     }
 
     @Bean
-    public Step step1() {
-        return stepBuilderFactory.get("step1")
+    public Step step(AnyItemProcessor processor, ItemWriter<AnyItemEntity> writer) {
+        return stepBuilderFactory.get("step")
                 .<AnyItemEntity, AnyItemEntity>chunk(10)
                 .reader(reader())
-                .processor(processor())
-                .writer(writer())
+                .processor(processor)
+                .writer(writer)
                 .build();
     }
 
     @Bean
-    public Job job() {
-        return jobBuilderFactory.get("sem nome")
+    @Qualifier("stepWithCustomWriter")
+    public Step stepWithCustomWriter(AnyItemProcessor processor, @Qualifier("customWriter") ItemWriter<AnyItemEntity> writer) {
+        return stepBuilderFactory.get("step with custom writer")
+                .<AnyItemEntity, AnyItemEntity>chunk(10)
+                .reader(reader())
+                .processor(processor)
+                .writer(writer)
+                .build();
+    }
+
+    @Bean
+    public Job job(Step step) {
+        return jobBuilderFactory.get("job")
                 .incrementer(new RunIdIncrementer())
-                .flow(step1())
+                .flow(step)
+                .end()
+                .build();
+    }
+
+    @Bean
+    public Job jobWithAnotherStep(@Qualifier("stepWithCustomWriter") Step step) {
+        return jobBuilderFactory.get("job with another step")
+                .incrementer(new RunIdIncrementer())
+                .flow(step)
                 .end()
                 .build();
     }

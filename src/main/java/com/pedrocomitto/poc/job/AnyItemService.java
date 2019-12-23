@@ -27,7 +27,7 @@ public class AnyItemService {
     }
 
     public void updateItemAsSync(final AnyItemEntity anyItemEntity) {
-        log.info("M=updateItemAsSync");
+        log.info("M=updateItemAsSync, id={}", anyItemEntity.getId());
 
         anyItemEntity.setDateSync(LocalDateTime.now());
         anyItemRepository.save(anyItemEntity);
