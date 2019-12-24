@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Table(name = "ANY_ITEM")
 @Getter
 @Setter
-@ToString(exclude = "id")
+@ToString
 public class AnyItemEntity {
 
     @Id
@@ -21,6 +21,8 @@ public class AnyItemEntity {
     private String info1;
 
     private String info2;
+
+    private String info3;
 
     @Column(name = "date_sync")
     private LocalDateTime dateSync;

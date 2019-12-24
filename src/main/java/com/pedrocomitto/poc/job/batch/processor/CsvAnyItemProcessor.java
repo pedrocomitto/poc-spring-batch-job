@@ -10,11 +10,11 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 @StepScope
-public class AnyItemProcessor implements ItemProcessor<AnyItemEntity, AnyItemEntity> {
+public class CsvAnyItemProcessor implements ItemProcessor<AnyItemEntity, AnyItemEntity> {
 
     private final AnyItemService anyItemService;
 
-    public AnyItemProcessor(AnyItemService anyItemService) {
+    public CsvAnyItemProcessor(AnyItemService anyItemService) {
         this.anyItemService = anyItemService;
     }
 

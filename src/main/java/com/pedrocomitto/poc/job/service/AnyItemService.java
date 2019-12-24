@@ -26,10 +26,12 @@ public class AnyItemService {
         return anyItemEntity;
     }
 
-    public void updateItemAsSync(final AnyItemEntity anyItemEntity) {
-        log.info("M=updateItemAsSync, id={}", anyItemEntity.getId());
+    public void generateInfo3(AnyItemEntity anyItemEntity) {
+        log.info("M=generateInfo3, anyItemEntity={}", anyItemEntity.toString());
 
+        anyItemEntity.setInfo3(anyItemEntity.getInfo1() + anyItemEntity.getInfo2());
         anyItemEntity.setDateSync(LocalDateTime.now());
+
         anyItemRepository.save(anyItemEntity);
     }
 }
