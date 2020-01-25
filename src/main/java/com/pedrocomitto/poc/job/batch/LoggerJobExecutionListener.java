@@ -18,4 +18,5 @@ public class LoggerJobExecutionListener implements JobExecutionListener {
 
         log.info("M=afterJob, duration={}", duration);
     }
+
 }

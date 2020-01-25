@@ -24,6 +24,6 @@ public class AnyItemEntity {
 
     private String info3;
 
-    @Column(name = "date_sync")
     private LocalDateTime dateSync;
+
 }

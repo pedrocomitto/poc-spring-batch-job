@@ -10,4 +10,5 @@ import org.springframework.stereotype.Repository;
 public interface AnyItemRepository extends CrudRepository<AnyItemEntity, Long> {
 
     Slice<AnyItemEntity> findAll(Pageable pageable);
+
 }

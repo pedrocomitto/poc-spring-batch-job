@@ -1,15 +1,13 @@
 package com.pedrocomitto.poc.job.batch.processor;
 
-import com.pedrocomitto.poc.job.service.AnyItemService;
 import com.pedrocomitto.poc.job.domain.entity.AnyItemEntity;
+import com.pedrocomitto.poc.job.service.AnyItemService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
-@StepScope
 public class CsvAnyItemProcessor implements ItemProcessor<AnyItemEntity, AnyItemEntity> {
 
     private final AnyItemService anyItemService;
@@ -24,4 +22,5 @@ public class CsvAnyItemProcessor implements ItemProcessor<AnyItemEntity, AnyItem
 
         return anyItemService.normalize(item);
     }
+
 }

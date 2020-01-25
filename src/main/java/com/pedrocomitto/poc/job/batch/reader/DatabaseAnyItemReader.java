@@ -3,7 +3,6 @@ package com.pedrocomitto.poc.job.batch.reader;
 import com.pedrocomitto.poc.job.domain.entity.AnyItemEntity;
 import com.pedrocomitto.poc.job.repository.AnyItemRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
@@ -38,4 +37,5 @@ public class DatabaseAnyItemReader implements ItemReader<AnyItemEntity> {
 
        return queue.isEmpty() ? null : queue.poll();
     }
+
 }

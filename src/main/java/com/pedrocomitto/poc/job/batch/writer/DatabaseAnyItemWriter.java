@@ -23,4 +23,5 @@ public class DatabaseAnyItemWriter implements ItemWriter<AnyItemEntity> {
         log.info("M=write");
         items.forEach(anyItemService::generateInfo3);
     }
+
 }

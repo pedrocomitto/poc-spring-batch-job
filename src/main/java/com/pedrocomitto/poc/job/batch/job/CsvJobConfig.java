@@ -78,6 +78,8 @@ public class CsvJobConfig {
     private RepositoryItemWriter<AnyItemEntity> writer() {
         return new RepositoryItemWriterBuilder<AnyItemEntity>()
                 .repository(anyItemRepository)
-                .methodName("save").build();
+                .methodName("save")
+                .build();
     }
+
 }
