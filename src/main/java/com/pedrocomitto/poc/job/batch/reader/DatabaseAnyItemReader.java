@@ -17,8 +17,6 @@ public class DatabaseAnyItemReader implements ItemReader<AnyItemEntity> {
 
     private final AnyItemRepository anyItemRepository;
 
-    private int currentPage = 0;
-
     private final Queue<AnyItemEntity> queue = new ArrayDeque<>();
 
     public DatabaseAnyItemReader(final AnyItemRepository anyItemRepository) {
@@ -30,8 +28,8 @@ public class DatabaseAnyItemReader implements ItemReader<AnyItemEntity> {
         log.info("M=read, reading items with null sync date, currentPage={}", currentPage);
 
        if (queue.isEmpty()) {
-           final PageRequest paginaBusca = PageRequest.of(this.currentPage++, 200);
-           final Slice<AnyItemEntity> page = anyItemRepository.findAll(paginaBusca);
+           final PageRequest pageRequest = PageRequest.of(0, 200);
+           final Slice<AnyItemEntity> page = anyItemRepository.findAll(pageRequest);
            queue.addAll(page.getContent());
        }
 
